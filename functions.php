@@ -8,8 +8,8 @@ function getProdutos(): array {
 
 // Calculo de descontos para os produtos
 function calcularDesconto(float $preco, string $categoria): float {
-    if ($categoria === "Perifericos") {
-        return $preco * 0.90;
+            if ($categoria === "Perifericos" || $categoria === "Monitores") {      
+      return $preco * 0.90;
     }
     return $preco;
 }
