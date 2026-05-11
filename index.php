@@ -58,35 +58,42 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
         </form>
 
         <div class="row g-4">
-            <?php foreach ($produtosFiltrados as $p): ?>
-                <div class="col-md-4">
-                    <div class="card h-100 position-relative <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?>">
-                        <div class="card-body">
-                            <?php if ($p['preco_final'] < $p['preco']): ?>
-                                <span class="badge bg-warning text-dark badge-promo">Promoção</span>
-                            <?php endif; ?>
+            <?php if (empty($produtosFiltrados)): ?>
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted fs-5">Nenhum produto encontrado.</p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($produtosFiltrados as $p): ?>
+                    <div class="col-md-4">
+                        <div class="card h-100 position-relative <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?>">
+                            <div class="card-body">
+                                <?php if ($p['preco_final'] < $p['preco']): ?>
+                                    <span class="badge bg-warning text-dark badge-promo">Promoção</span>
+                                <?php endif; ?>
 
-                            <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
-                            <p class="text-muted mb-1"><?= htmlspecialchars($p['categoria']) ?></p>
+                                <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
+                                <p class="text-muted mb-1"><?= htmlspecialchars($p['categoria']) ?></p>
 
-                            <?php if ($p['preco_final'] < $p['preco']): ?>
-                                <p class="text-decoration-line-through text-muted mb-0">
-                                    R$ <?= number_format($p['preco'], 2, ',', '.') ?>
-                                </p>
-                            <?php endif; ?>
+                                <?php if ($p['preco_final'] < $p['preco']): ?>
+                                    <p class="text-decoration-line-through text-muted mb-0">
+                                        R$ <?= number_format($p['preco'], 2, ',', '.') ?>
+                                    </p>
+                                <?php endif; ?>
 
-                            <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
+                                <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
 
-                            <?php if ($p['estoque'] === 0): ?>
-                                <span class="badge bg-danger">Esgotado</span>
-                            <?php else: ?>
-                                <span class="badge bg-success">Em estoque: <?= $p['estoque'] ?></span>
-                            <?php endif; ?>
+                                <?php if ($p['estoque'] === 0): ?>
+                                    <span class="badge bg-danger">Esgotado</span>
+                                <?php else: ?>
+                                    <span class="badge bg-success">Em estoque: <?= $p['estoque'] ?></span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
