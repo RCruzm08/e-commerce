@@ -1,0 +1,37 @@
+[
+    {
+        "sku":"HW-001",
+        "nome":"Placa de video RTX 4060",
+        "categoria":"Hardware",
+        "preco":2450.00,
+        "estoque": 15
+        },
+       {
+        "sku":"HW-002",
+        "nome":"Processador Intel core I5",
+        "categoria":"Hardware",
+        "preco":1200.50,
+        "estoque":0
+        },
+        {
+        "sku":"HW-003",
+        "nome":"Teclado Mecanico switch blue",
+        "categoria":"Perifericos",
+        "preco":350.00,
+        "estoque":25
+        },
+        {
+        "sku":"HW-004",
+        "nome":"Monitor Gamer 244HZ 32Pol",
+        "categoria":"Monitores",
+        "preco":1450.00,
+        "estoque":5
+        },
+        {
+        "sku":"HW-005",
+        "nome":"Mouse HYPERX Hast 16000DPI",
+        "categoria":"Perifericos",
+        "preco":289.90,
+        "estoque":100
+        }
+]
