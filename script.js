@@ -1,15 +1,22 @@
 const botoes = document.querySelectorAll(".btn-add");
 
 botoes.forEach(botao => {
-    botao.addEventListener('click', function () {
+    botao.addEventListener("click", function () {
+        const badgeEstoque = this.closest(".card-body").querySelector(".badge.bg-success");
 
-        const nomeProduto = this.getAttribute('data-nome');
+        const estoqueAtual = parseInt(badgeEstoque.textContent.replace("Em estoque: ", ""));
+        const novoEstoque = estoqueAtual - 1;
 
-        alert(`Sucesso: ${nomeProduto} foi adicionado ao seu carrinho`);
+        if (novoEstoque <= 0) {
+            badgeEstoque.textContent = "Esgotado";
+            badgeEstoque.classList.replace("bg-success", "bg-danger");
+            this.remove();
+        } else {
+            badgeEstoque.textContent = `Em estoque: ${novoEstoque}`;
+        }
 
-        this.innerText = "No Carrinho";
-
-        this.classList.replace('btn-success', 'btn-warning');
-
+        this.innerText = "No Carrinho ✓";
+        this.classList.replace("btn-success", "btn-warning");
+        this.disabled = true;
     });
 });
