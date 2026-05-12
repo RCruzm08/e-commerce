@@ -428,3 +428,152 @@ body.light-mode ::-webkit-scrollbar-thumb {
 body.light-mode ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
 }
+body.light-mode {
+    background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(16,185,129,0.08), transparent 25%),
+        linear-gradient(180deg, #dbe4f0 0%, #cfd9e8 100%);
+
+    color: #111827;
+}
+
+body.light-mode .navbar {
+    background: rgba(226,232,240,0.82) !important;
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+body.light-mode .navbar-brand {
+    color: #111827 !important;
+}
+
+body.light-mode form.bg-white {
+    background: rgba(248,250,252,0.72) !important;
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+}
+
+body.light-mode .form-label {
+    color: #111827;
+}
+
+body.light-mode .form-control,
+body.light-mode .form-select {
+    background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(148,163,184,0.35);
+    color: #111827;
+}
+
+body.light-mode .form-control::placeholder {
+    color: #64748b;
+}
+
+body.light-mode .form-control:focus,
+body.light-mode .form-select:focus {
+    background: white;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+}
+
+body.light-mode .card {
+    background:
+        linear-gradient(180deg,
+        rgba(255,255,255,0.88),
+        rgba(241,245,249,0.92));
+
+    border: 1px solid rgba(255,255,255,0.45);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 12px 35px rgba(15,23,42,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.45);
+
+    color: #111827;
+}
+
+body.light-mode .card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 18px 45px rgba(15,23,42,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+}
+
+body.light-mode .card-title {
+    color: #0f172a;
+}
+
+body.light-mode .text-muted {
+    color: #64748b !important;
+}
+
+body.light-mode .text-success {
+    color: #15803d !important;
+}
+
+body.light-mode .badge.bg-success {
+    background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+}
+
+body.light-mode .badge.bg-danger {
+    background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+}
+
+body.light-mode .btn-outline-light {
+    border-color: rgba(15,23,42,0.18);
+    color: #0f172a;
+    background: rgba(255,255,255,0.55);
+}
+
+body.light-mode .btn-outline-light:hover {
+    background: #0f172a;
+    color: white;
+}
+
+body.light-mode .btn-success {
+    box-shadow: 0 10px 25px rgba(34,197,94,0.18);
+}
+
+body.light-mode .btn-warning {
+    box-shadow: 0 10px 25px rgba(245,158,11,0.16);
+}
+
+body.light-mode .btn-outline-warning {
+    background: rgba(255,255,255,0.45);
+}
+
+body.light-mode .btn-outline-success {
+    background: rgba(255,255,255,0.45);
+}
+
+body.light-mode #carrinho-total {
+    background: rgba(248,250,252,0.78) !important;
+    border: 1px solid rgba(255,255,255,0.45);
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+body.light-mode section h2 {
+    color: #0f172a;
+}
+
+body.light-mode .card-esgotado {
+    opacity: .58;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: #dbe4f0;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
