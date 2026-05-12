@@ -343,3 +343,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+const toggleTheme = document.getElementById("toggle-theme");
+
+function aplicarTema(tema) {
+
+    if (tema === "light") {
+
+        document.body.classList.add("light-mode");
+
+        toggleTheme.textContent = "☀️ ";
+
+    } else {
+
+        document.body.classList.remove("light-mode");
+
+        toggleTheme.textContent = "🌙 ";
+    }
+}
+
+const temaSalvo = localStorage.getItem("tema") || "dark";
+
+aplicarTema(temaSalvo);
+
+toggleTheme.addEventListener("click", () => {
+
+    const temaAtual = document.body.classList.contains("light-mode")
+        ? "light"
+        : "dark";
+
+    const novoTema = temaAtual === "dark"
+        ? "light"
+        : "dark";
+
+    localStorage.setItem("tema", novoTema);
+
+    aplicarTema(novoTema);
+});
