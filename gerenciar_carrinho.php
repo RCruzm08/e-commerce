@@ -5,16 +5,19 @@ require_once "functions.php";
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
+
 if (!isset($_SESSION['estoque'])) {
     $_SESSION['estoque'] = [];
 }
 
-$sku  = $_GET['sku']  ?? null;
+$sku = $_GET['sku'] ?? null;
 $acao = $_GET['acao'] ?? 'add';
 
 if ($sku) {
+
     $produtos = getProdutos();
-    $produto  = null;
+    $produto = null;
+
     foreach ($produtos as $p) {
         if ($p['sku'] === $sku) {
             $produto = $p;
@@ -22,23 +25,44 @@ if ($sku) {
         }
     }
 
-    if ($acao === 'add' && $produto && !in_array($sku, $_SESSION['carrinho'])) {
-        $estoqueAtual = $_SESSION['estoque'][$sku] ?? $produto['estoque'];
-        if ($estoqueAtual > 0) {
-            $_SESSION['carrinho'][] = $sku;
-            $_SESSION['estoque'][$sku] = $estoqueAtual - 1;
-        }
-    } elseif ($acao === 'remove') {
-        $pos = array_search($sku, $_SESSION['carrinho']);
-        if ($pos !== false) {
-            unset($_SESSION['carrinho'][$pos]);
-            $_SESSION['carrinho'] = array_values($_SESSION['carrinho']);
+    if ($produto) {
 
-            $estoqueAtual = $_SESSION['estoque'][$sku] ?? ($produto['estoque'] - 1);
-            $_SESSION['estoque'][$sku] = $estoqueAtual + 1;
+        if (!isset($_SESSION['estoque'][$sku])) {
+            $_SESSION['estoque'][$sku] = $produto['estoque'];
+        }
+
+     
+        if ($acao === 'add') {
+
+            if ($_SESSION['estoque'][$sku] > 0) {
+
+                $_SESSION['carrinho'][] = $sku;
+
+                $_SESSION['estoque'][$sku]--;
+            }
+        }
+
+      
+        if ($acao === 'remove') {
+
+            $key = array_search($sku, $_SESSION['carrinho']);
+
+            if ($key !== false) {
+
+                unset($_SESSION['carrinho'][$key]);
+
+                $_SESSION['carrinho'] = array_values($_SESSION['carrinho']);
+
+                $_SESSION['estoque'][$sku]++;
+
+                if ($_SESSION['estoque'][$sku] > $produto['estoque']) {
+                    $_SESSION['estoque'][$sku] = $produto['estoque'];
+                }
+            }
         }
     }
 }
 
 header("Location: index.php");
 exit;
+?>
