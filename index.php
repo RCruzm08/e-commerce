@@ -29,8 +29,8 @@ $produtosFavoritos = array_filter($produtos, function($p) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-commerce Relampago Maccquin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet"><style>
         .card-esgotado { opacity: 0.6; filter: grayscale(1); }
         .badge-promo   { position: absolute; top: 10px; right: 10px; }
     </style>
@@ -39,14 +39,23 @@ $produtosFavoritos = array_filter($produtos, function($p) {
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand">Loja Maccquin Tech 1.0</span>
-            <div class="d-flex gap-2">
-                <a href="#favoritos" class="btn btn-outline-warning btn-sm">
-                    ⭐ Meus Favoritos
-                    <span id="badge-favoritos" class="badge bg-warning text-dark ms-1 <?= empty($_SESSION['favoritos']) ? 'd-none' : '' ?>"><?= count($_SESSION['favoritos']) ?></span>
-                </a>
-                <a href="#carrinho" class="btn btn-outline-success btn-sm">
-                    🛒 Carrinho
-                    <span id="badge-carrinho" class="badge bg-success ms-1 <?= empty($_SESSION['carrinho']) ? 'd-none' : '' ?>"><?= count($_SESSION['carrinho']) ?></span>
+            <div class="d-flex align-items-center gap-2">
+
+    <button id="toggle-theme" class="btn btn-outline-light btn-sm">
+        🌙
+    </button>
+
+    <a href="#favoritos" class="btn btn-outline-warning btn-sm">
+        ⭐ Meus Favoritos
+        <span id="badge-favoritos" class="badge bg-warning text-dark ms-1 <?= empty($_SESSION['favoritos']) ? 'd-none' : '' ?>"><?= count($_SESSION['favoritos']) ?></span>
+    </a>
+
+    <a href="#carrinho" class="btn btn-outline-success btn-sm">
+        🛒 Carrinho
+        <span id="badge-carrinho" class="badge bg-success ms-1 <?= empty($_SESSION['carrinho']) ? 'd-none' : '' ?>"><?= count($_SESSION['carrinho']) ?></span>
+    </a>
+
+</div>
                 </a>
             </div>
         </div>
