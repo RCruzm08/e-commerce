@@ -1,11 +1,21 @@
 <?php
+session_start();
 require_once "functions.php";
+
+if (!isset($_SESSION['favoritos'])) {
+    $_SESSION['favoritos'] = [];
+}
+
 $produtos = getProdutos();
 $busca = $_GET['busca'] ?? "";
 $cat = $_GET['cat'] ?? "";
 $ordem = $_GET['ordem'] ?? "";
 
 $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
+
+$produtosFavoritos = array_filter($produtos, function($p) {
+    return in_array($p['sku'], $_SESSION['favoritos']);
+});
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,17 +25,25 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
     <title>E-commerce Relampago Maccquin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    .card-esgotado { opacity:0.6; filter:grayscale(1); }
-    .badge-promo { position:absolute; top:10px; right:10px; }
+        .card-esgotado { opacity: 0.6; filter: grayscale(1); }
+        .badge-promo { position: absolute; top: 10px; right: 10px; }
     </style>
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand">Loja Maccquin Tech 1.0</span>
+            <a href="#favoritos" class="btn btn-outline-warning btn-sm">
+                ⭐ Meus Favoritos
+                <?php if (!empty($_SESSION['favoritos'])): ?>
+                    <span class="badge bg-warning text-dark ms-1"><?= count($_SESSION['favoritos']) ?></span>
+                <?php endif; ?>
+            </a>
         </div>
     </nav>
+
     <div class="container">
+        <!-- Filtros -->
         <form method="get" class="row g-3 mb-5 p-3 bg-white rounded shadow-sm align-items-end">
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Buscar produto</label>
@@ -36,9 +54,9 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
                 <label class="form-label fw-semibold">Categoria</label>
                 <select name="cat" class="form-select">
                     <option value="">Todas as categorias</option>
-                    <option value="Hardware"   <?= $cat === "Hardware"    ? "selected" : "" ?>>Hardware</option>
-                    <option value="Monitores"  <?= $cat === "Monitores"   ? "selected" : "" ?>>Monitores</option>
-                    <option value="Perifericos"<?= $cat === "Perifericos" ? "selected" : "" ?>>Periféricos</option>
+                    <option value="Hardware"    <?= $cat === "Hardware"    ? "selected" : "" ?>>Hardware</option>
+                    <option value="Monitores"   <?= $cat === "Monitores"   ? "selected" : "" ?>>Monitores</option>
+                    <option value="Perifericos" <?= $cat === "Perifericos" ? "selected" : "" ?>>Periféricos</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -57,6 +75,7 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
             </div>
         </form>
 
+        <!-- Listagem de produtos -->
         <div class="row g-4">
             <?php if (empty($produtosFiltrados)): ?>
                 <div class="col-12 text-center py-5">
@@ -64,9 +83,10 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
                 </div>
             <?php else: ?>
                 <?php foreach ($produtosFiltrados as $p): ?>
+                    <?php $isFavorito = in_array($p['sku'], $_SESSION['favoritos']); ?>
                     <div class="col-md-4">
-                        <div class="card h-100 position-relative <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?>">
-                            <div class="card-body">
+                        <div class="card h-100 position-relative <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?> <?= $isFavorito ? 'border-warning' : '' ?>">
+                            <div class="card-body d-flex flex-column">
                                 <?php if ($p['preco_final'] < $p['preco']): ?>
                                     <span class="badge bg-warning text-dark badge-promo">Promoção</span>
                                 <?php endif; ?>
@@ -86,6 +106,23 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
                                     <span class="badge bg-danger">Esgotado</span>
                                 <?php else: ?>
                                     <span class="badge bg-success">Em estoque: <?= $p['estoque'] ?></span>
+                                    <div class="mt-3">
+                                        <button
+                                            class="btn btn-success w-100 btn-add"
+                                            data-nome="<?= htmlspecialchars($p['nome']) ?>"
+                                            data-sku="<?= htmlspecialchars($p['sku']) ?>">
+                                            Comprar
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="card-footer">
+                                <?php if (!$isFavorito): ?>
+                                    <a href="gerenciar_favoritos.php?sku=<?= $p['sku'] ?>&acao=add"
+                                       class="btn btn-outline-warning w-100">⭐ Favoritar</a>
+                                <?php else: ?>
+                                    <a href="gerenciar_favoritos.php?sku=<?= $p['sku'] ?>&acao=remove"
+                                       class="btn btn-warning w-100">🌟 Remover</a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -93,7 +130,53 @@ $produtosFiltrados = filtrarEOrdenar($produtos, $busca, $cat, $ordem);
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
+
+        <!-- Meus Favoritos -->
+        <section id="favoritos" class="mt-5 pt-4 border-top">
+            <h2 class="mb-4">⭐ Meus Favoritos</h2>
+            <?php if (empty($produtosFavoritos)): ?>
+                <p class="text-muted">Sua lista de desejos está vazia.</p>
+            <?php else: ?>
+                <div class="row g-4">
+                    <?php foreach ($produtosFavoritos as &$p):
+                        $p['preco_final'] = calcularDesconto($p['preco'], $p['categoria']);
+                    ?>
+                        <div class="col-md-4">
+                            <div class="card h-100 border-warning position-relative <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?>">
+                                <div class="card-body d-flex flex-column">
+                                    <?php if ($p['preco_final'] < $p['preco']): ?>
+                                        <span class="badge bg-warning text-dark badge-promo">Promoção</span>
+                                    <?php endif; ?>
+
+                                    <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
+                                    <p class="text-muted mb-1"><?= htmlspecialchars($p['categoria']) ?></p>
+
+                                    <?php if ($p['preco_final'] < $p['preco']): ?>
+                                        <p class="text-decoration-line-through text-muted mb-0">
+                                            R$ <?= number_format($p['preco'], 2, ',', '.') ?>
+                                        </p>
+                                    <?php endif; ?>
+
+                                    <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
+
+                                    <?php if ($p['estoque'] === 0): ?>
+                                        <span class="badge bg-danger">Esgotado</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-success">Em estoque: <?= $p['estoque'] ?></span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="gerenciar_favoritos.php?sku=<?= $p['sku'] ?>&acao=remove"
+                                       class="btn btn-warning w-100">🌟 Remover dos favoritos</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; unset($p); ?>
+                </div>
+            <?php endif; ?>
+        </section>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
