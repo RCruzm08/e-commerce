@@ -8,6 +8,9 @@ if (!isset($_SESSION['favoritos'])) {
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
+if (!isset($_SESSION['estoque'])) {
+    $_SESSION['estoque'] = [];
+}
 
 $produtos = getProdutos();
 $busca    = $_GET['busca'] ?? "";
@@ -39,15 +42,11 @@ $produtosFavoritos = array_filter($produtos, function($p) {
             <div class="d-flex gap-2">
                 <a href="#favoritos" class="btn btn-outline-warning btn-sm">
                     ⭐ Meus Favoritos
-                    <?php if (!empty($_SESSION['favoritos'])): ?>
-                        <span class="badge bg-warning text-dark ms-1"><?= count($_SESSION['favoritos']) ?></span>
-                    <?php endif; ?>
+                    <span id="badge-favoritos" class="badge bg-warning text-dark ms-1 <?= empty($_SESSION['favoritos']) ? 'd-none' : '' ?>"><?= count($_SESSION['favoritos']) ?></span>
                 </a>
                 <a href="#carrinho" class="btn btn-outline-success btn-sm">
                     🛒 Carrinho
-                    <?php if (!empty($_SESSION['carrinho'])): ?>
-                        <span class="badge bg-success ms-1"><?= count($_SESSION['carrinho']) ?></span>
-                    <?php endif; ?>
+                    <span id="badge-carrinho" class="badge bg-success ms-1 <?= empty($_SESSION['carrinho']) ? 'd-none' : '' ?>"><?= count($_SESSION['carrinho']) ?></span>
                 </a>
             </div>
         </div>
@@ -95,13 +94,20 @@ $produtosFavoritos = array_filter($produtos, function($p) {
             <?php else: ?>
                 <?php foreach ($produtosFiltrados as $p): ?>
                     <?php
-                        $isFavorito  = in_array($p['sku'], $_SESSION['favoritos']);
-                        $noCarrinho  = in_array($p['sku'], $_SESSION['carrinho']);
+                        $isFavorito     = in_array($p['sku'], $_SESSION['favoritos']);
+                        $noCarrinho     = in_array($p['sku'], $_SESSION['carrinho']);
+                        $estoqueAtual   = $_SESSION['estoque'][$p['sku']] ?? $p['estoque'];
                     ?>
                     <div class="col-md-4">
                         <div class="card h-100 position-relative
-                            <?= $p['estoque'] === 0 ? 'card-esgotado' : '' ?>
-                            <?= $isFavorito ? 'border-warning' : '' ?>">
+                            <?= $estoqueAtual === 0 ? 'card-esgotado' : '' ?>
+                            <?= $isFavorito ? 'border-warning' : '' ?>"
+                            data-sku="<?= $p['sku'] ?>"
+                            data-estoque="<?= $estoqueAtual ?>"
+                            data-nome="<?= htmlspecialchars($p['nome'], ENT_QUOTES) ?>"
+                            data-categoria="<?= htmlspecialchars($p['categoria'], ENT_QUOTES) ?>"
+                            data-preco="<?= $p['preco'] ?>"
+                            data-preco-final="<?= $p['preco_final'] ?>">
                             <div class="card-body d-flex flex-column">
                                 <?php if ($p['preco_final'] < $p['preco']): ?>
                                     <span class="badge bg-warning text-dark badge-promo">Promoção</span>
@@ -118,17 +124,21 @@ $produtosFavoritos = array_filter($produtos, function($p) {
 
                                 <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
 
-                                <?php if ($p['estoque'] === 0): ?>
-                                    <span class="badge bg-danger">Esgotado</span>
+                                <?php if ($estoqueAtual === 0): ?>
+                                    <span class="badge bg-danger badge-estoque">Esgotado</span>
                                 <?php else: ?>
-                                    <span class="badge bg-success">Em estoque: <?= $p['estoque'] ?></span>
+                                    <span class="badge bg-success badge-estoque">Em estoque: <?= $estoqueAtual ?></span>
                                     <div class="mt-3 d-flex flex-column gap-2">
                                         <?php if (!$noCarrinho): ?>
                                             <a href="gerenciar_carrinho.php?sku=<?= $p['sku'] ?>&acao=add"
-                                               class="btn btn-success w-100">🛒 Comprar</a>
+                                               class="btn btn-success w-100 btn-carrinho"
+                                               data-sku="<?= $p['sku'] ?>"
+                                               data-acao="add">🛒 Comprar</a>
                                         <?php else: ?>
                                             <a href="gerenciar_carrinho.php?sku=<?= $p['sku'] ?>&acao=remove"
-                                               class="btn btn-warning w-100">✓ No Carrinho — Remover</a>
+                                               class="btn btn-warning w-100 btn-carrinho"
+                                               data-sku="<?= $p['sku'] ?>"
+                                               data-acao="remove">✓ No Carrinho — Remover</a>
                                         <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
@@ -136,10 +146,14 @@ $produtosFavoritos = array_filter($produtos, function($p) {
                             <div class="card-footer">
                                 <?php if (!$isFavorito): ?>
                                     <a href="gerenciar_favoritos.php?sku=<?= $p['sku'] ?>&acao=add"
-                                       class="btn btn-outline-warning w-100">⭐ Favoritar</a>
+                                       class="btn btn-outline-warning w-100 btn-favorito"
+                                       data-sku="<?= $p['sku'] ?>"
+                                       data-acao="add">⭐ Favoritar</a>
                                 <?php else: ?>
                                     <a href="gerenciar_favoritos.php?sku=<?= $p['sku'] ?>&acao=remove"
-                                       class="btn btn-warning w-100">🌟 Remover dos Favoritos</a>
+                                       class="btn btn-warning w-100 btn-favorito"
+                                       data-sku="<?= $p['sku'] ?>"
+                                       data-acao="remove">🌟 Remover dos Favoritos</a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -160,45 +174,43 @@ $produtosFavoritos = array_filter($produtos, function($p) {
                 }
                 unset($p);
             ?>
-            <?php if (empty($produtosCarrinho)): ?>
-                <p class="text-muted">Seu carrinho está vazio.</p>
-            <?php else: ?>
-                <?php
-                    $total = array_sum(array_column(array_values($produtosCarrinho), 'preco_final'));
-                ?>
-                <div class="row g-4">
-                    <?php foreach ($produtosCarrinho as $p): ?>
-                        <div class="col-md-4">
-                            <div class="card h-100 border-success position-relative">
-                                <div class="card-body d-flex flex-column">
-                                    <?php if ($p['preco_final'] < $p['preco']): ?>
-                                        <span class="badge bg-warning text-dark badge-promo">Promoção</span>
-                                    <?php endif; ?>
+            <p id="carrinho-vazio" class="text-muted <?= !empty($produtosCarrinho) ? 'd-none' : '' ?>">Seu carrinho está vazio.</p>
+            <div id="carrinho-grid" class="row g-4">
+                <?php foreach ($produtosCarrinho as $p): ?>
+                    <div class="col-md-4" id="carrinho-item-<?= $p['sku'] ?>">
+                        <div class="card h-100 border-success position-relative">
+                            <div class="card-body d-flex flex-column">
+                                <?php if ($p['preco_final'] < $p['preco']): ?>
+                                    <span class="badge bg-warning text-dark badge-promo">Promoção</span>
+                                <?php endif; ?>
 
-                                    <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
-                                    <p class="text-muted mb-1"><?= htmlspecialchars($p['categoria']) ?></p>
+                                <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
+                                <p class="text-muted mb-1"><?= htmlspecialchars($p['categoria']) ?></p>
 
-                                    <?php if ($p['preco_final'] < $p['preco']): ?>
-                                        <p class="text-decoration-line-through text-muted mb-0">
-                                            R$ <?= number_format($p['preco'], 2, ',', '.') ?>
-                                        </p>
-                                    <?php endif; ?>
+                                <?php if ($p['preco_final'] < $p['preco']): ?>
+                                    <p class="text-decoration-line-through text-muted mb-0">
+                                        R$ <?= number_format($p['preco'], 2, ',', '.') ?>
+                                    </p>
+                                <?php endif; ?>
 
-                                    <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
-                                </div>
-                                <div class="card-footer">
-                                    <a href="gerenciar_carrinho.php?sku=<?= $p['sku'] ?>&acao=remove"
-                                       class="btn btn-outline-danger w-100">🗑 Remover do Carrinho</a>
-                                </div>
+                                <p class="fw-bold text-success">R$ <?= number_format($p['preco_final'], 2, ',', '.') ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="gerenciar_carrinho.php?sku=<?= $p['sku'] ?>&acao=remove"
+                                   class="btn btn-outline-danger w-100 btn-carrinho"
+                                   data-sku="<?= $p['sku'] ?>"
+                                   data-acao="remove"
+                                   data-contexto="carrinho">🗑 Remover do Carrinho</a>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="mt-4 p-3 bg-white rounded shadow-sm d-flex justify-content-between align-items-center">
-                    <span class="fs-5 fw-semibold">Total:</span>
-                    <span class="fs-4 fw-bold text-success">R$ <?= number_format($total, 2, ',', '.') ?></span>
-                </div>
-            <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <?php $total = empty($produtosCarrinho) ? 0 : array_sum(array_column(array_values($produtosCarrinho), 'preco_final')); ?>
+            <div id="carrinho-total" class="mt-4 p-3 bg-white rounded shadow-sm d-flex justify-content-between align-items-center <?= empty($produtosCarrinho) ? 'd-none' : '' ?>">
+                <span class="fs-5 fw-semibold">Total:</span>
+                <span id="carrinho-total-valor" class="fs-4 fw-bold text-success">R$ <?= number_format($total, 2, ',', '.') ?></span>
+            </div>
         </section>
 
         <!-- Meus Favoritos -->
@@ -246,5 +258,6 @@ $produtosFavoritos = array_filter($produtos, function($p) {
             <?php endif; ?>
         </section>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
