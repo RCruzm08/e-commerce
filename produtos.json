@@ -1,37 +1,128 @@
 [
     {
-        "sku":"HW-001",
-        "nome":"Placa de video RTX 4060",
-        "categoria":"Hardware",
-        "preco":2450.00,
+        "sku": "HW-001",
+        "nome": "Placa de Video RTX 4060",
+        "categoria": "Hardware",
+        "preco": 2450.00,
         "estoque": 15
-        },
-       {
-        "sku":"HW-002",
-        "nome":"Processador Intel core I5",
-        "categoria":"Hardware",
-        "preco":1200.50,
-        "estoque":0
-        },
-        {
-        "sku":"HW-003",
-        "nome":"Teclado Mecanico switch blue",
-        "categoria":"Perifericos",
-        "preco":350.00,
-        "estoque":25
-        },
-        {
-        "sku":"HW-004",
-        "nome":"Monitor Gamer 244HZ 32Pol",
-        "categoria":"Monitores",
-        "preco":1450.00,
-        "estoque":5
-        },
-        {
-        "sku":"HW-005",
-        "nome":"Mouse HYPERX Hast 16000DPI",
-        "categoria":"Perifericos",
-        "preco":289.90,
-        "estoque":100
-        }
+    },
+    {
+        "sku": "HW-002",
+        "nome": "Processador Intel Core I5",
+        "categoria": "Hardware",
+        "preco": 1200.50,
+        "estoque": 0
+    },
+    {
+        "sku": "HW-003",
+        "nome": "Teclado HyperX Alloy Core RGB Switch Blue",
+        "categoria": "Perifericos",
+        "preco": 350.00,
+        "estoque": 25
+    },
+    {
+        "sku": "HW-004",
+        "nome": "Monitor Gamer 244Hz 32Pol",
+        "categoria": "Monitores",
+        "preco": 1450.00,
+        "estoque": 5
+    },
+    {
+        "sku": "HW-005",
+        "nome": "Mouse HyperX Haste 16000DPI",
+        "categoria": "Perifericos",
+        "preco": 289.90,
+        "estoque": 100
+    },
+    {
+        "sku": "HW-006",
+        "nome": "SSD NVMe M.2 Kingston 1TB",
+        "categoria": "Hardware",
+        "preco": 420.00,
+        "estoque": 40
+    },
+    {
+        "sku": "HW-007",
+        "nome": "Headset HyperX Cloud II",
+        "categoria": "Perifericos",
+        "preco": 550.00,
+        "estoque": 12
+    },
+    {
+        "sku": "HW-008",
+        "nome": "Placa de Video RX 7600 XT",
+        "categoria": "Hardware",
+        "preco": 1890.00,
+        "estoque": 8
+    },
+    {
+        "sku": "HW-009",
+        "nome": "Memória RAM DDR5 32GB 6000MHz",
+        "categoria": "Hardware",
+        "preco": 680.00,
+        "estoque": 20
+    },
+    {
+        "sku": "HW-010",
+        "nome": "Placa-Mãe B650 Gaming WiFi",
+        "categoria": "Hardware",
+        "preco": 1100.00,
+        "estoque": 6
+    },
+    {
+        "sku": "HW-011",
+        "nome": "Monitor Ultrawide 34Pol 144Hz",
+        "categoria": "Monitores",
+        "preco": 2200.00,
+        "estoque": 3
+    },
+    {
+        "sku": "HW-012",
+        "nome": "Monitor 4K 27Pol 60Hz",
+        "categoria": "Monitores",
+        "preco": 1750.00,
+        "estoque": 7
+    },
+    {
+        "sku": "HW-013",
+        "nome": "Mousepad Gamer XL RGB",
+        "categoria": "Perifericos",
+        "preco": 129.90,
+        "estoque": 50
+    },
+    {
+        "sku": "HW-014",
+        "nome": "Webcam Logitech C920 1080p",
+        "categoria": "Perifericos",
+        "preco": 380.00,
+        "estoque": 15
+    },
+    {
+        "sku": "HW-015",
+        "nome": "Fonte 750W 80 Plus Gold",
+        "categoria": "Hardware",
+        "preco": 560.00,
+        "estoque": 18
+    },
+    {
+        "sku": "HW-016",
+        "nome": "Gabinete Mid-Tower com Vidro Temperado",
+        "categoria": "Hardware",
+        "preco": 350.00,
+        "estoque": 22
+    },
+    {
+        "sku": "HW-017",
+        "nome": "Cooler CPU Water Cooling 240mm",
+        "categoria": "Hardware",
+        "preco": 420.00,
+        "estoque": 10
+    },
+    {
+        "sku": "HW-018",
+        "nome": "Placa de Captura Elgato HD60 X",
+        "categoria": "Perifericos",
+        "preco": 1200.00,
+        "estoque": 4
+    }
 ]
