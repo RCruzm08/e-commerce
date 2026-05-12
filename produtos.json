@@ -3,126 +3,210 @@
         "sku": "HW-001",
         "nome": "Placa de Video RTX 4060",
         "categoria": "Hardware",
-        "preco": 2450.00,
+        "preco": 2199.90,
         "estoque": 15
     },
     {
         "sku": "HW-002",
-        "nome": "Processador Intel Core I5",
+        "nome": "Processador Intel Core i5-14400F",
         "categoria": "Hardware",
-        "preco": 1200.50,
+        "preco": 1099.90,
         "estoque": 0
     },
     {
         "sku": "HW-003",
-        "nome": "Teclado HyperX Alloy Core RGB Switch Blue",
+        "nome": "Teclado HyperX Alloy Core RGB",
         "categoria": "Perifericos",
-        "preco": 350.00,
+        "preco": 239.90,
         "estoque": 25
     },
     {
         "sku": "HW-004",
-        "nome": "Monitor Gamer 244Hz 32Pol",
+        "nome": "Monitor Gamer 240Hz 27Pol",
         "categoria": "Monitores",
-        "preco": 1450.00,
+        "preco": 1699.90,
         "estoque": 5
     },
     {
         "sku": "HW-005",
-        "nome": "Mouse HyperX Haste 16000DPI",
+        "nome": "Mouse HyperX Pulsefire Haste",
         "categoria": "Perifericos",
-        "preco": 289.90,
+        "preco": 249.90,
         "estoque": 100
     },
     {
         "sku": "HW-006",
-        "nome": "SSD NVMe M.2 Kingston 1TB",
+        "nome": "SSD NVMe Kingston NV2 1TB",
         "categoria": "Hardware",
-        "preco": 420.00,
+        "preco": 349.90,
         "estoque": 40
     },
     {
         "sku": "HW-007",
         "nome": "Headset HyperX Cloud II",
         "categoria": "Perifericos",
-        "preco": 550.00,
+        "preco": 499.90,
         "estoque": 12
     },
     {
         "sku": "HW-008",
         "nome": "Placa de Video RX 7600 XT",
         "categoria": "Hardware",
-        "preco": 1890.00,
+        "preco": 2499.90,
         "estoque": 8
     },
     {
         "sku": "HW-009",
         "nome": "Memória RAM DDR5 32GB 6000MHz",
         "categoria": "Hardware",
-        "preco": 680.00,
+        "preco": 799.90,
         "estoque": 20
     },
     {
         "sku": "HW-010",
         "nome": "Placa-Mãe B650 Gaming WiFi",
         "categoria": "Hardware",
-        "preco": 1100.00,
+        "preco": 1299.90,
         "estoque": 6
     },
     {
         "sku": "HW-011",
-        "nome": "Monitor Ultrawide 34Pol 144Hz",
+        "nome": "Monitor Ultrawide 34Pol 165Hz",
         "categoria": "Monitores",
-        "preco": 2200.00,
+        "preco": 2799.90,
         "estoque": 3
     },
     {
         "sku": "HW-012",
-        "nome": "Monitor 4K 27Pol 60Hz",
+        "nome": "Monitor 4K 27Pol IPS",
         "categoria": "Monitores",
-        "preco": 1750.00,
+        "preco": 1899.90,
         "estoque": 7
     },
     {
         "sku": "HW-013",
         "nome": "Mousepad Gamer XL RGB",
         "categoria": "Perifericos",
-        "preco": 129.90,
+        "preco": 119.90,
         "estoque": 50
     },
     {
         "sku": "HW-014",
-        "nome": "Webcam Logitech C920 1080p",
+        "nome": "Webcam Logitech C920s",
         "categoria": "Perifericos",
-        "preco": 380.00,
+        "preco": 429.90,
         "estoque": 15
     },
     {
         "sku": "HW-015",
-        "nome": "Fonte 750W 80 Plus Gold",
+        "nome": "Fonte Corsair 750W 80 Plus Gold",
         "categoria": "Hardware",
-        "preco": 560.00,
+        "preco": 699.90,
         "estoque": 18
     },
     {
         "sku": "HW-016",
-        "nome": "Gabinete Mid-Tower com Vidro Temperado",
+        "nome": "Gabinete Gamer Mid-Tower",
         "categoria": "Hardware",
-        "preco": 350.00,
+        "preco": 399.90,
         "estoque": 22
     },
     {
         "sku": "HW-017",
-        "nome": "Cooler CPU Water Cooling 240mm",
+        "nome": "Water Cooler 240mm RGB",
         "categoria": "Hardware",
-        "preco": 420.00,
+        "preco": 459.90,
         "estoque": 10
     },
     {
         "sku": "HW-018",
         "nome": "Placa de Captura Elgato HD60 X",
         "categoria": "Perifericos",
-        "preco": 1200.00,
+        "preco": 1399.90,
         "estoque": 4
+    },
+    {
+        "sku": "HW-019",
+        "nome": "RTX 4070 Ti Super 16GB",
+        "categoria": "Hardware",
+        "preco": 6399.90,
+        "estoque": 9
+    },
+    {
+        "sku": "HW-020",
+        "nome": "Ryzen 7 7800X3D",
+        "categoria": "Hardware",
+        "preco": 2899.90,
+        "estoque": 11
+    },
+    {
+        "sku": "HW-021",
+        "nome": "Monitor OLED 27Pol 240Hz",
+        "categoria": "Monitores",
+        "preco": 5499.90,
+        "estoque": 2
+    },
+    {
+        "sku": "HW-022",
+        "nome": "Teclado Mecânico Redragon Kumara RGB",
+        "categoria": "Perifericos",
+        "preco": 219.90,
+        "estoque": 34
+    },
+    {
+        "sku": "HW-023",
+        "nome": "Mouse Logitech G Pro X Superlight",
+        "categoria": "Perifericos",
+        "preco": 799.90,
+        "estoque": 17
+    },
+    {
+        "sku": "HW-024",
+        "nome": "SSD Samsung 990 PRO 2TB",
+        "categoria": "Hardware",
+        "preco": 1499.90,
+        "estoque": 14
+    },
+    {
+        "sku": "HW-025",
+        "nome": "Monitor Curvo QHD 32Pol 165Hz",
+        "categoria": "Monitores",
+        "preco": 2499.90,
+        "estoque": 6
+    },
+    {
+        "sku": "HW-026",
+        "nome": "Cadeira Gamer Premium",
+        "categoria": "Perifericos",
+        "preco": 1699.90,
+        "estoque": 7
+    },
+    {
+        "sku": "HW-027",
+        "nome": "Microfone HyperX QuadCast",
+        "categoria": "Perifericos",
+        "preco": 899.90,
+        "estoque": 13
+    },
+    {
+        "sku": "HW-028",
+        "nome": "Kit 3 Fans RGB ARGB",
+        "categoria": "Hardware",
+        "preco": 159.90,
+        "estoque": 55
+    },
+    {
+        "sku": "HW-029",
+        "nome": "Notebook Gamer RTX 4060 Ryzen 7",
+        "categoria": "Hardware",
+        "preco": 7499.90,
+        "estoque": 5
+    },
+    {
+        "sku": "HW-030",
+        "nome": "Monitor Portátil USB-C 15.6Pol",
+        "categoria": "Monitores",
+        "preco": 1099.90,
+        "estoque": 9
     }
 ]
