@@ -1,4 +1,5 @@
 <?php
+// Sistema de favoritos(adiciona em favorito)
 session_start();
 
 if (!isset($_SESSION['favoritos'])) {
